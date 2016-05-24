@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>​
+    <img id="cardOne"  src="static/card_back.jpg" width="100px">
+    <img id="cardTwo" src="static/card_back.jpg" width="100px">
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script>
+    var answer_key = {};
+
+    var turn = 0
+
+    function clickCard1(evt){
+        var cardID = $(this).attr("id");
+        $(this).attr("src", "static/card_face1.jpg");
+        turn += 1;
+        user_click1 = cardID;
+        answer_key[user_click1] = $(this).attr("src");
+        compareCards();
+    };
+
+    function clickCard2(evt){
+        var cardID = $(this).attr("id");
+        $(this).attr("src", "static/card_face2.jpg");
+        turn += 1;
+        user_click2 = cardID;
+        answer_key[user_click2] = $(this).attr("src");
+        console.log(answer_key);
+        compareCards();
+    };
+    $('#cardOne').click(clickCard1);
+    $('#cardTwo').click(clickCard2);
+
+    function compareCards(){
+        var dict_length = Object.keys(answer_key).length;
+        console.log(dict_length);
+        if (dict_length == 2){
+            console.log(answer_key[user_click1]);
+            console.log(answer_key[user_click2]);
+            if (answer_key[user_click1] == answer_key[user_click2]){
+                alert("Matched all pairs in " + turn + " turns.");
+                location.reload();
+            } else {
+                alert("No match");
+            }
+        };
+    }
+
+        // console.log("The card is revealed:", answer_key[user_click2]);    
+        // if (answer_key[user_click1] == answer_key[user_pick2]){
+        //     console.log("match");
+        // } else {
+        //     console.log("no match"); };
+    </script>
+​
+</body>
+</html>

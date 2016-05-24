@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>​
+    <img id="cardOne"  src="static/card_back.jpg" width="100px">
+    <img id="cardTwo" src="static/card_back.jpg" width="100px">
+​	<!-- <img id="cardThree"  src="static/card_back.jpg" width="100px">
+    <img id="cardFour" src="static/card_back.jpg" width="100px"> -->
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script>
+    var cardImages = ["static/card_face1.jpg", "static/card_face2.jpg"];
+    // var rand = cardImages[Math.floor(Math.random() * cardImages.length)];
+    var rand;
+    var answerKey = {'card': 'initialize', 'otherCard': 'to be diff', 'cardOne': 'one', 'cardTwo': 'two'};
+
+    var clickCounter = 0;
+
+    var click1 = "card";
+    var click2 = "otherCard";
+
+    if (answerKey['cardOne'] == answerKey['cardTwo']){
+    		console.log("They match!");
+    } else {
+    		console.log('try again')
+    };
+
+    function clickedCard(evt) {
+    	// $(this).attr("src", rand = cardImages[Math.floor(Math.random() * cardImages.length)]);
+    	$(this).attr("src", "static/card_face1.jpg");
+    	clickCounter += 1;
+    	if (clickCounter == 1) {
+    		answerKey[click1] = $(this).attr("src");
+    		click1 = $(this).attr("id");
+    		console.log("click one is " + click1);
+    	} else if (clickCounter == 2) {
+    		answerKey[click2] = $(this).attr("src");
+    		click2 = $(this).attr("id");
+    		console.log("click two is " + click2);
+    		console.log(answerKey['cardOne']);
+    		console.log('MATCH');
+    		//make so it's like clicked a third time
+    		if (answerKey['cardOne'] == answerKey['cardTwo']){
+    			console.log("They match!");
+    		} else {
+    			console.log('try again')
+    		};
+    	}
+    	console.log(clickCounter);
+    	console.log(answerKey['cardOne'] == answerKey['cardTwo']);
+    	if (answerKey['cardOne'] == answerKey['cardTwo']){
+    		console.log("They match!");
+    	} else {
+    		console.log('try again')
+    	};
+    }
+    // $("#cardOne").click(clickedCard);
+    // $("#cardTwo").click(clickedCard);
+    //generalize the above
+    $("img").click(clickedCard);
+
+    $("img").click(function() {
+    	var cardImgId = $(this).attr("id");
+    	console.log(cardImgId);
+    	answerKey[cardImgId] = $(this).attr("src");
+    	console.log(answerKey);
+    });
+    // if (clickCounter == 2) {
+    // 	if (answerKey['cardOne'] == answerKey['cardTwo']){
+    // 		alert("They match!");
+    // 	} else {
+    // 	console.log('try again')
+    // 	}
+    // };
+
+    </script>
+​
+</body>
+</html>

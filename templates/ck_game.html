@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<!-- the following HTML elements are the images of cards that you will click -->
+		<!-- they should each have an id that you can use in your jQuery as a selector -->
+		<!-- these are not real image sources yet, so link to a real one! -->
+		<img id ="one" src="http://card_image.png" alt="Card face" height="200" width="200">
+		<img id ="two" src="http://card_image.png" alt="Card face" height="200" width="200">
+		<img id ="three" src="http://card_image.png" alt="Card face" height="200" width="200">
+		<img id ="four" src="http://card_image.png" alt="Card face" height="200" width="200">
+
+
+		<!-- link to jQuery, so you can use it in the following JavaScript code -->
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script>
+		// 
+		// Your code for the game should go here (convert from your Python code)
+		// You will want to change the existing code inbetween these script tags
+		// so they perform the same logic as your Python code.
+		// For example, a JavaScript/jQuery function for "flipping" the first card
+		// This is simply replacing the image source attribute to make a different image appear
+		// later on, this image could be randomized (so random images are revealed underneath the card)
+		function card_flip(evt) {
+			$("#one").attr("src", "http://frog.png");
+		};
+
+		// jQuery for clicking the first card and triggering the card_flip function
+		$('#one').click(card_flip);
+		</script>
+	</body>
+</html>
