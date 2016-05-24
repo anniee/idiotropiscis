@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>​
+    <img id="cardOne"  src="static/card_back.jpg" width="100px">
+    <img id="cardTwo" src="static/card_back.jpg" width="100px"><br>
+    <img id="cardThree" src="static/card_back.jpg" width="100px">
+    <img id="cardFour" src="static/card_back.jpg" width="100px">
+
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script>
+    var answer_key = {};
+    var turn = 0
+
+    function clickCard(evt){
+        turn += 1;
+        console.log(turn);
+        // when click card, get its ID
+        var cardID = $(this).attr("id");
+        // flip it (eventually, this image will be random)
+        $(this).attr("src", "static/card_face1.jpg");
+        // add click values (two clicks) to dictionary
+        // if turn is even, means can compare two cards.
+        if (turn % 2 != 0){
+            user_click1 = cardID;
+            answer_key[user_click1] = $(this).attr("src");
+        } else if (turn % 2 == 0) {
+            user_click2 = cardID;
+            answer_key[user_click2] = $(this).attr("src");
+            compareCards();
+        };
+    };
+    
+    $('img').click(clickCard);
+
+    // probably will need to compare things in dict, empty after each two things is compared
+    // need to add if matched all pairs alert "Matched all pairs in " + turn + " turns.";
+
+    //while an array does not contain cardOne, cardTwo, cardThree, and cardFour (to be added above)
+    // compare the two clicks, to see if they match or not
+    // if they match, leave them flipped
+    // if not, flip them back
+    // eventually, need to disable clicking on same two cards, or just use list includes all four
+    var listOfClickedCards = [];
+
+    function compareCards(){
+        var dict_length = Object.keys(answer_key).length;
+        console.log(dict_length);
+        if (dict_length == 2){
+            console.log(answer_key[user_click1]);
+            console.log(answer_key[user_click2]);
+            if (answer_key[user_click1] == answer_key[user_click2]){
+                listOfClickedCards.push.apply(listOfClickedCards, Object.keys(answer_key));
+                // listOfClickedCards = Object.keys(answer_key);
+                console.log(listOfClickedCards);
+                answer_key = {};
+                //this doesn't work yet
+                // console.log('contains' + containsAll(listOfClickedCards, ['cardOne', 'cardTwo', 'cardThree', 'cardFour']));
+                // if (containsAll(listOfClickedCards, ['cardOne', 'cardTwo', 'cardThree', 'cardFour'])){
+                // var containsAll = $.inArray('cardOne', 'cardTwo', 'cardThree', 'cardFour',listOfClickedCards);
+                // console.log(containsAll);
+                contain_all = containsAll(['cardOne', 'cardTwo', 'cardThree', 'cardFour'], listOfClickedCards);
+
+                console.log("contains" + contain_all)
+                if (contain_all){
+                    alert("Found all matching pairs!");
+                } else {
+                    alert("Found one match!");
+                }
+            } else {
+                alert("no match!");
+            }
+        }
+    };
+
+    function containsAll(needles, haystack){ 
+      for(var i = 0 , len = needles.length; i < len; i++){
+         if($.inArray(needles[i], haystack) == -1) return false;
+      }
+      return true;
+    };
+
+        // console.log("The card is revealed:", answer_key[user_click2]);    
+        // if (answer_key[user_click1] == answer_key[user_pick2]){
+        //     console.log("match");
+        // } else {
+        //     console.log("no match"); };
+    </script>
+​
+</body>
+</html>
