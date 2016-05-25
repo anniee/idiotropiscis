@@ -19,6 +19,7 @@
     var cardTwoImg = "static/card_face2.jpg";
     var cardThreeImg = "static/card_face1.jpg";
     var cardFourImg = "static/card_face2.jpg";
+    var clickable = ["#cardOne", "#cardTwo", "#cardThree", "#cardFour"];
 
     function clickCard(evt){
         turn++;
@@ -93,7 +94,12 @@
                 alert("no match!");
                 // get click1 and click2 IDs,
                 // use those to replace the src of those elements with those IDs
-                $()
+                var cardIDs = Object.keys(answerKey)
+                console.log("card IDs " + cardIDs);
+                // var firstClickCardID = ("#" + cardIDs[0]);
+                var secondClickCardID = ("#" + cardIDs[1]);
+                // $(firstClickCardID).attr("src", "static/card_back.jpg");
+                $(secondClickCardID).attr("src", "static/card_back.jpg");
                 answerKey = {};
             }
         }
