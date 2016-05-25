@@ -14,9 +14,14 @@
     <script>
     //TODO: make a list of clickable cards. if they are clicked, add the clicked class to them. if they don't match, flip back over and reset everything. if they match, remain flipped and prevent further clicks (like by checking it has the class clicked and removing it from the clickable list, and using clickable as determinant of being allowed to click the cards), from affecting the counting.
 
+    //fix turn to count the turns, when click on two clickable cards (whether they match or not), vs. counter to count clicks and control fxnality
+
+    //problem is when click on two matching (priestess), then click another card (hermit) followed by one of those matching (priestess), click counter does not increment to be two when do click on other hermit.
+
     // var imageBank = ['static/card_face1.jpg', 'static/card_face2.jpg']
     var answerKey = {};
     var turn = 0
+    var clickCounter = 0;
     var cardOneImg = "static/card_face1.jpg";
     var cardTwoImg = "static/card_face2.jpg";
     var cardThreeImg = "static/card_face1.jpg";
@@ -29,6 +34,8 @@
         if (cardClass != "clicked"){
         //if this clicked card is in clickable or does not have the class clicked
             turn++;
+            clickCounter++;
+            console.log("click count: ", clickCounter);
             console.log("Turn: ", turn);
             $(this).addClass("clicked");
             var cardID = $(this).attr("id");
@@ -50,19 +57,29 @@
             };
             // add click values (two clicks) to dictionary
             // if turn is even, means can compare two cards.
-            if (turn % 2 != 0){
+            if (clickCounter % 2 != 0){
                 user_click1 = cardID;
                 answerKey[user_click1] = $(this).attr("src");
-            } else if (turn % 2 == 0) {
+            } else if (clickCounter % 2 == 0) {
                 user_click2 = cardID;
                 answerKey[user_click2] = $(this).attr("src");
                 compareCards();
             };
+            // if (turn % 2 != 0){
+            //     user_click1 = cardID;
+            //     answerKey[user_click1] = $(this).attr("src");
+            // } else if (turn % 2 == 0) {
+            //     user_click2 = cardID;
+            //     answerKey[user_click2] = $(this).attr("src");
+            //     compareCards();
+            // };
             // imageBank = ['static/card_face1.jpg', 'static/card_face2.jpg']
             // console.log('image bank is ' + imageBank);
         } else {
             // alert("You already clicked that!");
             turn--;
+            // clickCounter = 0;
+            // clickCounter++;
         }
     };
     
@@ -108,7 +125,8 @@
                     delete clickable[removeClicked1];
                     delete clickable[removeClicked2];
                     console.log("clickable after: " + clickable);
-
+                    clickCounter = 0;
+                    console.log("click count after match: ", clickCounter);
                 }
             } else {
                 // alert("no match!");
@@ -126,6 +144,8 @@
                 //remove class clicked
                 $(firstClickCardID).removeClass("clicked");
                 $(secondClickCardID).removeClass("clicked");
+                // clickCounter = 0;
+                console.log("click count after no match: ", clickCounter);
 
                 // $(secondClickCardID).attr("src", "static/card_back.jpg");
                 answerKey = {};
