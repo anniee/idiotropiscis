@@ -12,66 +12,89 @@
 
     <script src="http://code.jquery.com/jquery.js"></script>
     <script>
-    var answer_key = {};
+    // var imageBank = ['static/card_face1.jpg', 'static/card_face2.jpg']
+    var answerKey = {};
     var turn = 0
+    var cardOneImg = "static/card_face1.jpg";
+    var cardTwoImg = "static/card_face2.jpg";
+    var cardThreeImg = "static/card_face1.jpg";
+    var cardFourImg = "static/card_face2.jpg";
 
     function clickCard(evt){
-        turn += 1;
-        console.log(turn);
-        // when click card, get its ID
+        turn++;
+        console.log("Turn: ", turn);
+        $(this).addClass("clicked");
+        var cardClass = $(this).attr("class");
         var cardID = $(this).attr("id");
-        // flip it (eventually, this image will be random)
-        $(this).attr("src", "static/card_face1.jpg");
+        console.log(cardID, cardClass);
+        var cardID = $(this).attr("id");
+
+        // eventually, need to make flip more pseudo-random than this
+        // e.g. var cardFace = imageBank.pop();
+        // console.log('cardface is ' + cardFace);
+
+        if (cardID == "cardOne"){
+            $(this).attr("src", cardOneImg);
+        } else if (cardID == "cardTwo"){
+            $(this).attr("src", cardTwoImg);
+        } else if (cardID == "cardThree"){
+            $(this).attr("src", cardThreeImg);
+        } else if (cardID == "cardFour"){
+            $(this).attr("src", cardFourImg);
+        };
         // add click values (two clicks) to dictionary
         // if turn is even, means can compare two cards.
         if (turn % 2 != 0){
             user_click1 = cardID;
-            answer_key[user_click1] = $(this).attr("src");
+            answerKey[user_click1] = $(this).attr("src");
         } else if (turn % 2 == 0) {
             user_click2 = cardID;
-            answer_key[user_click2] = $(this).attr("src");
+            answerKey[user_click2] = $(this).attr("src");
             compareCards();
         };
+        // imageBank = ['static/card_face1.jpg', 'static/card_face2.jpg']
+        // console.log('image bank is ' + imageBank);
     };
     
     $('img').click(clickCard);
 
     // probably will need to compare things in dict, empty after each two things is compared
-    // need to add if matched all pairs alert "Matched all pairs in " + turn + " turns.";
 
     //while an array does not contain cardOne, cardTwo, cardThree, and cardFour (to be added above)
-    // compare the two clicks, to see if they match or not
     // if they match, leave them flipped
     // if not, flip them back
     // eventually, need to disable clicking on same two cards, or just use list includes all four
+    //add clicked on class when clicking, so disable doing anything when has that class
+    // for now, maybe define var for two card images, and then use conditionals to generate based on id (1 and 4 always high priestess, 2 and 3 always hermit)
+    // could do in clicked card function if class of card clicked is priestess, display priestess, etc.
     var listOfClickedCards = [];
 
     function compareCards(){
-        var dict_length = Object.keys(answer_key).length;
+        var dict_length = Object.keys(answerKey).length;
         console.log(dict_length);
         if (dict_length == 2){
-            console.log(answer_key[user_click1]);
-            console.log(answer_key[user_click2]);
-            if (answer_key[user_click1] == answer_key[user_click2]){
-                listOfClickedCards.push.apply(listOfClickedCards, Object.keys(answer_key));
-                // listOfClickedCards = Object.keys(answer_key);
+            console.log(answerKey[user_click1]);
+            console.log(answerKey[user_click2]);
+            if (answerKey[user_click1] == answerKey[user_click2]){
+                listOfClickedCards.push.apply(listOfClickedCards, Object.keys(answerKey));
+                // listOfClickedCards = Object.keys(answerKey);
                 console.log(listOfClickedCards);
-                answer_key = {};
-                //this doesn't work yet
-                // console.log('contains' + containsAll(listOfClickedCards, ['cardOne', 'cardTwo', 'cardThree', 'cardFour']));
-                // if (containsAll(listOfClickedCards, ['cardOne', 'cardTwo', 'cardThree', 'cardFour'])){
-                // var containsAll = $.inArray('cardOne', 'cardTwo', 'cardThree', 'cardFour',listOfClickedCards);
-                // console.log(containsAll);
-                contain_all = containsAll(['cardOne', 'cardTwo', 'cardThree', 'cardFour'], listOfClickedCards);
+                answerKey = {};
 
-                console.log("contains" + contain_all)
-                if (contain_all){
-                    alert("Found all matching pairs!");
+                containAll = containsAll(['cardOne', 'cardTwo', 'cardThree', 'cardFour'], listOfClickedCards);
+
+                console.log("contains" + containAll)
+                if (containAll){
+                    alert("Found all matching pairs in " + turn/2 + " turns!");
                 } else {
                     alert("Found one match!");
                 }
             } else {
                 alert("no match!");
+                // get click1 and click2 IDs,
+                // use those to replace the src of those elements with those IDs
+                $()
+                answerKey = {};
             }
         }
     };
@@ -82,13 +105,6 @@
       }
       return true;
     };
-
-        // console.log("The card is revealed:", answer_key[user_click2]);    
-        // if (answer_key[user_click1] == answer_key[user_pick2]){
-        //     console.log("match");
-        // } else {
-        //     console.log("no match"); };
     </script>
-​
 </body>
 </html>
