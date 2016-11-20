@@ -5,9 +5,12 @@
 </head>
 <body>​
     <img id="cardOne"  src="static/card_back.jpg" width="100px">
-    <img id="cardTwo" src="static/card_back.jpg" width="100px"><br>
+    <img id="cardTwo" src="static/card_back.jpg" width="100px">
+    <img id="cardFive" src="static/card_back.jpg" width="100px"><br>
     <img id="cardThree" src="static/card_back.jpg" width="100px">
     <img id="cardFour" src="static/card_back.jpg" width="100px">
+    <img id="cardSix" src="static/card_back.jpg" width="100px">
+
 
 
     <script src="http://code.jquery.com/jquery.js"></script>
@@ -26,7 +29,9 @@
     var cardTwoImg = "static/card_face2.jpg";
     var cardThreeImg = "static/card_face1.jpg";
     var cardFourImg = "static/card_face2.jpg";
-    var clickable = ["cardOne", "cardTwo", "cardThree", "cardFour"];
+    var cardFiveImg = "static/card_face1.jpg";
+    var cardSixImg = "static/card_face1.jpg";
+    var clickable = ["cardOne", "cardTwo", "cardThree", "cardFour", "cardFive", "cardSix"];
 
     function clickCard(evt){
         var cardClass = $(this).attr("class");
@@ -54,6 +59,10 @@
                 $(this).attr("src", cardThreeImg);
             } else if (cardID == "cardFour"){
                 $(this).attr("src", cardFourImg);
+            } else if (cardID == "cardFive"){
+                $(this).attr("src", cardFiveImg);
+            } else if (cardID == "cardSix"){
+                $(this).attr("src", cardSixImg);
             };
             // add click values (two clicks) to dictionary
             // if turn is even, means can compare two cards.
@@ -82,7 +91,7 @@
             // clickCounter++;
         }
     };
-    
+
     $('img').click(clickCard);
 
     // probably will need to compare things in dict, empty after each two things is compared
@@ -110,7 +119,7 @@
                 console.log(listOfClickedCards);
                 answerKey = {};
 
-                containAll = containsAll(['cardOne', 'cardTwo', 'cardThree', 'cardFour'], listOfClickedCards);
+                containAll = containsAll(['cardOne', 'cardTwo', 'cardThree', 'cardFour', 'cardFive', 'cardSix'], listOfClickedCards);
 
 
                 console.log("contains" + containAll)
@@ -162,7 +171,7 @@
         }, 1500);
     };
 
-    function containsAll(needles, haystack){ 
+    function containsAll(needles, haystack){
       for(var i = 0 , len = needles.length; i < len; i++){
          if($.inArray(needles[i], haystack) == -1) return false;
       }
